@@ -1,0 +1,26 @@
+{
+  "os": "Windows-10-10.0.22631-SP0",
+  "python": "3.8.18",
+  "startedAt": "2024-10-15T10:19:00.453632Z",
+  "program": "Jupyter Notebooks/Renyi Divergence.ipynb",
+  "email": "gratzermarty@gmail.com",
+  "root": "C:\\Users\\Martin\\Documents\\School\\Thesis\\Git Repository\\Jupyter Notebooks",
+  "host": "Troubadour",
+  "username": "Martin",
+  "executable": "C:\\Users\\Martin\\Documents\\School\\Thesis\\Git Repository\\.venv\\Scripts\\python.exe",
+  "cpu_count": 16,
+  "cpu_count_logical": 24,
+  "disk": {
+    "/": {
+      "total": "1023279099904",
+      "used": "358236991488"
+    }
+  },
+  "memory": {
+    "total": "34053414912"
+  },
+  "cpu": {
+    "count": 16,
+    "countLogical": 24
+  }
+}
