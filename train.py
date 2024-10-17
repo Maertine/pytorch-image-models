@@ -389,6 +389,14 @@ group.add_argument('--use-multi-epochs-loader', action='store_true', default=Fal
                    help='use the multi-epochs-loader to save time at the beginning of every epoch')
 group.add_argument('--log-wandb', action='store_true', default=False,
                    help='log training and validation metrics to wandb')
+group.add_argument('--wandb-name', default=None, type=str, metavar='NAME',
+                   help='Name that is used in wandb')
+group.add_argument('--wandb-tags', default=None, type=str, metavar='NAME',
+                   help='Tags that are used in wandb')
+group.add_argument('--wandb-group', default=None, type=str, metavar='NAME',
+                   help='Group in wandb')
+group.add_argument('--wandb-notes', default=None, type=str, metavar='NAME',
+                   help='Notes to add to wandb')
 
 
 def _parse_args():
@@ -816,7 +824,12 @@ def main():
 
     if utils.is_primary(args) and args.log_wandb:
         if has_wandb:
-            wandb.init(project=args.experiment, config=args)
+            wandb.init(project=args.experiment,
+                       name = args.wandb_name,
+                       tags = args.wandb_tags,
+                       group = args.wandb_group,
+                       notes = args.wandb_notes,
+                       config=args)
         else:
             _logger.warning(
                 "You've requested to log metrics to wandb but package not found. "
