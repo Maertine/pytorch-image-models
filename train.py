@@ -40,6 +40,8 @@ from timm.optim import create_optimizer_v2, optimizer_kwargs
 from timm.scheduler import create_scheduler_v2, scheduler_kwargs
 from timm.utils import ApexScaler, NativeScaler
 
+from tmi import utils as tmi_utils
+
 try:
     from apex import amp
     from apex.parallel import DistributedDataParallel as ApexDDP
@@ -397,6 +399,24 @@ group.add_argument('--wandb-group', default=None, type=str, metavar='NAME',
                    help='Group in wandb')
 group.add_argument('--wandb-notes', default=None, type=str, metavar='NAME',
                    help='Notes to add to wandb')
+
+# My settings
+group.add_argument('--teacher-model', default=None, type=str, metavar='PATH',
+                   help='Architecture of teacher model used for distillation')
+group.add_argument('--teacher-model-path', default=None, type=str, metavar='PATH',
+                   help='Path to teacher model used for distillation')
+group.add_argument('--adjusted-training', default=None, type=str, metavar='NAME',
+                   help='Training adjustment (R, DKD, GDKD, NKD)')
+group.add_argument('--alpha', default=None, type=float,
+                   help='Alpha value used in Renyi Divergence')
+group.add_argument('--beta', default=None, type=float,
+                   help='Beta value used for weighting Cross Entropy and Renyi Divergence')
+group.add_argument('--zeta', default=None, type=float,
+                   help='Zeta value used in Decoupled Knowledge Distillation')
+group.add_argument('--temperature', default=1, type=float,
+                   help='Temperature used in distillation')
+group.add_argument('--derivatives-monitoring', action='store_true', default=False,
+                   help='Monitoring of the magnitude of several derivatives')
 
 
 def _parse_args():
@@ -788,6 +808,10 @@ def main():
             train_loss_fn = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
     else:
         train_loss_fn = nn.CrossEntropyLoss()
+    if args.adjusted_training == "R": #Overide previous loss settings
+        train_loss_fn = tmi_utils.RenyiDivergenceLoss(alpha=args.alpha,beta=args.beta,temperature=args.temperature)
+    elif args.adjusted_training == "DKD":
+        train_loss_fn = tmi_utils.DKDLoss(beta=args.beta, zeta=args.zeta,temperature=args.temperature)
     train_loss_fn = train_loss_fn.to(device=device)
     validate_loss_fn = nn.CrossEntropyLoss().to(device=device)
 
@@ -800,7 +824,11 @@ def main():
     output_dir = None
     if utils.is_primary(args):
         if args.experiment:
-            exp_name = args.experiment
+            exp_name = args.experiment.join([
+                datetime.now().strftime("%Y%m%d-%H%M%S"),
+                safe_model_name(args.model),
+                str(data_config['input_size'][-1])
+            ])
         else:
             exp_name = '-'.join([
                 datetime.now().strftime("%Y%m%d-%H%M%S"),
@@ -858,6 +886,25 @@ def main():
         _logger.info(
             f'Scheduled epochs: {num_epochs}. LR stepped per {"epoch" if lr_scheduler.t_in_epochs else "update"}.')
 
+    if args.adjusted_training is not None:
+        teacher_model = create_model(
+                            args.teacher_model,
+                            in_chans=in_chans,
+                            num_classes=args.num_classes,
+                            drop_rate=0.,
+                            drop_path_rate=None,
+                            drop_block_rate=None,
+                            global_pool=None,
+                            bn_momentum=None,
+                            bn_eps=None,
+                            checkpoint_path=args.teacher_model_path,
+                            )
+        teacher_model.to(device=device).eval()
+    else:
+        teacher_model = None
+
+
+
     results = []
     try:
         for epoch in range(start_epoch, num_epochs):
@@ -866,7 +913,7 @@ def main():
             elif args.distributed and hasattr(loader_train.sampler, 'set_epoch'):
                 loader_train.sampler.set_epoch(epoch)
 
-            train_metrics = train_one_epoch(
+            train_metrics, gradients = train_one_epoch(
                 epoch,
                 model,
                 loader_train,
@@ -881,6 +928,9 @@ def main():
                 model_ema=model_ema,
                 mixup_fn=mixup_fn,
                 num_updates_total=num_epochs * updates_per_epoch,
+                teacher_model=teacher_model,
+                gradients_monitoring = args.derivatives_monitoring,
+                temperature=args.temperature
             )
 
             if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
@@ -925,6 +975,7 @@ def main():
                     lr=sum(lrs) / len(lrs),
                     write_header=best_metric is None,
                     log_wandb=args.log_wandb and has_wandb,
+                    gradients=gradients
                 )
 
             if eval_metrics is not None:
@@ -972,6 +1023,9 @@ def train_one_epoch(
         model_ema=None,
         mixup_fn=None,
         num_updates_total=None,
+        teacher_model=None,
+        gradients_monitoring=False,
+        temperature=1
 ):
     if args.mixup_off_epoch and epoch >= args.mixup_off_epoch:
         if args.prefetcher and loader.mixup_enabled:
@@ -997,6 +1051,7 @@ def train_one_epoch(
     data_start_time = update_start_time = time.time()
     optimizer.zero_grad()
     update_sample_count = 0
+    grads = None
     for batch_idx, (input, target) in enumerate(loader):
         last_batch = batch_idx == last_batch_idx
         need_update = last_batch or (batch_idx + 1) % accum_steps == 0
@@ -1016,8 +1071,13 @@ def train_one_epoch(
 
         def _forward():
             with amp_autocast():
-                output = model(input)
-                loss = loss_fn(output, target)
+                if teacher_model is not None:
+                    teacher_output = teacher_model(input)
+                    output = model(input)
+                    loss = loss_fn(output, teacher_output, target)
+                else:
+                    output = model(input)
+                    loss = loss_fn(output, target)
             if accum_steps > 1:
                 loss /= accum_steps
             return loss
@@ -1061,6 +1121,25 @@ def train_one_epoch(
             continue
 
         num_updates += 1
+
+        if grads is None:
+            if gradients_monitoring:
+                optimizer.zero_grad()
+                with amp_autocast():
+                    if teacher_model is not None:
+                        teacher_output = teacher_model(input)
+                        output = model(input)
+                        loss = loss_fn(output, teacher_output, target)
+                    else:
+                        output = model(input)
+                        loss = loss_fn(output, target)
+                model.zero_grad()
+                loss.backward()
+                grads = []
+                for p in model.parameters():
+                    grads.append(torch.norm(p.grad).item())
+                if teacher_model is not None:
+                    xy_T2 = torch.max((teacher_output * output) / (temperature ** 2)).item()
         optimizer.zero_grad()
         if model_ema is not None:
             model_ema.update(model, step=num_updates)
@@ -1113,7 +1192,16 @@ def train_one_epoch(
     if hasattr(optimizer, 'sync_lookahead'):
         optimizer.sync_lookahead()
 
-    return OrderedDict([('loss', losses_m.avg)])
+    train_metrics = OrderedDict([('loss', losses_m.avg)])
+
+    if gradients_monitoring:
+        gradients = OrderedDict([('grad_1', grads[0]), ('grad_2', grads[1]), ('grad_3', grads[2]),
+                             ('grad_-3', grads[-3]), ('grad_-2', grads[-2]), ('grad_-1', grads[-1]),
+                             ('xy_T2', xy_T2)])
+    else:
+        gradients = None
+
+    return train_metrics, gradients
 
 
 def validate(

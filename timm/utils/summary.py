@@ -35,6 +35,7 @@ def update_summary(
         lr=None,
         write_header=False,
         log_wandb=False,
+        gradients=None,
 ):
     rowd = OrderedDict(epoch=epoch)
     rowd.update([('train_' + k, v) for k, v in train_metrics.items()])
@@ -42,6 +43,8 @@ def update_summary(
         rowd.update([('eval_' + k, v) for k, v in eval_metrics.items()])
     if lr is not None:
         rowd['lr'] = lr
+    if gradients:
+        rowd.update([(k, v) for k, v in gradients.items()])
     if log_wandb:
         wandb.log(rowd)
     with open(filename, mode='a') as cf:
