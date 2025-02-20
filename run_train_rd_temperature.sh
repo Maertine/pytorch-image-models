@@ -56,7 +56,7 @@ for alpha in "${alphas[@]}"; do
       --seed 25124 \
       --sched-on-updates \
       --log-wandb \
-      --experiment CIFAR-100-RD \
+      --experiment CIFAR-100-RD-T \
       --wandb-name "$wandb_name" \
       --wandb-tags S \
       --wandb-group Student \
