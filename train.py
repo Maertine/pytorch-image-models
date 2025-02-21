@@ -417,6 +417,8 @@ group.add_argument('--temperature', default=1, type=float,
                    help='Temperature used in distillation')
 group.add_argument('--derivatives-monitoring', action='store_true', default=False,
                    help='Monitoring of the magnitude of several derivatives')
+group.add_argument('--no-alpha-adjustment', action='store_true', default=False,
+                   help='No to adjusting the Renyi Divergence by dividing by alpha')
 
 
 def _parse_args():
@@ -809,7 +811,11 @@ def main():
     else:
         train_loss_fn = nn.CrossEntropyLoss()
     if args.adjusted_training == "R": #Overide previous loss settings
-        train_loss_fn = tmi_utils.RenyiDivergenceLoss(alpha=args.alpha,beta=args.beta,temperature=args.temperature)
+        if args.no_alpha_adjustment:
+            train_loss_fn = tmi_utils.RenyiDivergenceLossNoAlphaAdjustment(alpha=args.alpha, beta=args.beta,
+                                                                           temperature=args.temperature)
+        else:
+            train_loss_fn = tmi_utils.RenyiDivergenceLoss(alpha=args.alpha,beta=args.beta,temperature=args.temperature)
     elif args.adjusted_training == "DKD":
         train_loss_fn = tmi_utils.DKDLoss(beta=args.beta, zeta=args.zeta,temperature=args.temperature)
     train_loss_fn = train_loss_fn.to(device=device)

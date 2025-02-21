@@ -121,6 +121,29 @@ class RenyiDivergenceLoss(nn.Module):
         return (1-self.beta) * CE + self.beta *  1 / (self.alpha - 1) * torch.log(
             torch.sum(torch.pow(p, self.alpha) * torch.pow(q, 1 - self.alpha), dim=1)).mean() * (self.temperature ** 2)/ self.alpha
 
+class RenyiDivergenceLossNoAlphaAdjustment(nn.Module):
+    """
+    Knowledge distillation loss with Renyi Divergence but no alpha adjustment
+    """
+    def __init__(self, alpha=0.5, beta=0.5, temperature=1):
+        super(RenyiDivergenceLossNoAlphaAdjustment, self).__init__()
+        assert alpha > 0
+        assert beta >= 0 and beta <= 1
+        assert temperature > 0
+        self.alpha = alpha
+        self.beta = beta
+        self.temperature = temperature
+
+    def forward(self, x: torch.Tensor, y: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        CE = nn.CrossEntropyLoss()(x,target)
+        q = torch.softmax(x/self.temperature, dim=1)
+        p = torch.softmax(y/self.temperature, dim=1)
+
+        if self.alpha == 1:  # KL Divergence
+            return (1-self.beta) * CE + self.beta * torch.sum(p * torch.log(p / q), dim=1).mean() * (self.temperature ** 2)
+
+        return (1-self.beta) * CE + self.beta *  1 / (self.alpha - 1) * torch.log(
+            torch.sum(torch.pow(p, self.alpha) * torch.pow(q, 1 - self.alpha), dim=1)).mean() * (self.temperature ** 2)
 
 class DKDLoss(nn.Module):
     def __init__(self, beta = 0.5, zeta=0.5, temperature=1):
