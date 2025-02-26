@@ -12,4 +12,50 @@
 
 source .venv/bin/activate
 
-python train.py --data-dir /home/gratzerm/datasets/cifar100 --dataset cifar100 --train-split train --val-split test --model resnet152 --img-size 32 --epochs 220 --batch-size 512 --opt sgd --lr 0.08 --sched cosine --weight-decay 0.0005 --momentum 0.9 --warmup-epochs 10 --smoothing 0.1 --drop 0.3 --hflip 0.5 --train-crop-mode rrc --ratio 0.75 1.33 --scale 0.08 1.0 --mixup 0.1 --cutmix 1.0 --color-jitter 0.0 --amp --channels-last --min-lr 0.000001 --crop-pct 0.95 --train-interpolation bicubic --warmup-lr 0.002 --aa rand-m6-mstd0.5-inc1 --checkpoint-hist 2 --num-classes 100 --seed 1578 --sched-on-updates --log-wandb --experiment CIFAR-100 --wandb-name Resnet152-Teacher --wandb-tags T --wandb-group Teacher
+python train.py \
+      --data-dir /home/gratzerm/datasets/cifar100 \
+      --dataset cifar100 \
+      --train-split train \
+      --val-split test \
+      --model resnet18 \
+      --img-size 32 \
+      --epochs 220 \
+      --batch-size 512 \
+      --opt sgd \
+      --lr 0.08 \
+      --sched cosine \
+      --weight-decay 0.0005 \
+      --momentum 0.9 \
+      --warmup-epochs 10 \
+      --smoothing 0.1 \
+      --drop 0.3 \
+      --hflip 0.5 \
+      --train-crop-mode rrc \
+      --ratio 0.75 1.33 \
+      --scale 0.08 1.0 \
+      --mixup 0.1 \
+      --cutmix 1.0 \
+      --color-jitter 0.0 \
+      --amp \
+      --channels-last \
+      --min-lr 0.000001 \
+      --crop-pct 0.95 \
+      --train-interpolation bicubic \
+      --warmup-lr 0.002 \
+      --aa rand-m6-mstd0.5-inc1 \
+      --checkpoint-hist 2 \
+      --num-classes 100 \
+      --seed 7488 \
+      --sched-on-updates \
+      --log-wandb \
+      --experiment CIFAR-100-RD-NoAlpha \
+      --wandb-name Resnet18-Student-alpha1.25-seed7488 \
+      --wandb-tags S \
+      --wandb-group Student \
+      --teacher-model resnet152 \
+      --teacher-model-path /home/gratzerm/pytorch-image-models/output/train/20250220-215540CIFAR-100resnet152CIFAR-10032/last.pth.tar \
+      --adjusted-training R \
+      --alpha 1.25 \
+      --beta 0.9 \
+      --temperature 4 \
+      --no-alpha-adjustment
