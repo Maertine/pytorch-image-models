@@ -419,6 +419,8 @@ group.add_argument('--derivatives-monitoring', action='store_true', default=Fals
                    help='Monitoring of the magnitude of several derivatives')
 group.add_argument('--no-alpha-adjustment', action='store_true', default=False,
                    help='No to adjusting the Renyi Divergence by dividing by alpha')
+group.add_argument('--sigmoid-alpha-adjustment', action='store_true', default=False,
+                   help='Adjusting the Renyi Divergence by using a sigmoid function (works only for temperature 4)')
 
 
 def _parse_args():
@@ -813,6 +815,9 @@ def main():
     if args.adjusted_training == "R": #Overide previous loss settings
         if args.no_alpha_adjustment:
             train_loss_fn = tmi_utils.RenyiDivergenceLossNoAlphaAdjustment(alpha=args.alpha, beta=args.beta,
+                                                                           temperature=args.temperature)
+        elif args.sigmoid_alpha_adjustment:
+            train_loss_fn = tmi_utils.RenyiDivergenceLossSigmoidAdjusted(alpha=args.alpha, beta=args.beta,
                                                                            temperature=args.temperature)
         else:
             train_loss_fn = tmi_utils.RenyiDivergenceLoss(alpha=args.alpha,beta=args.beta,temperature=args.temperature)

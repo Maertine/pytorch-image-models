@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import numpy as np
 
 class RenyiDivergence(nn.Module):
     def __init__(self, alpha=0.5):
@@ -177,3 +178,30 @@ class DKDLoss(nn.Module):
         nckd = torch.sum(p_hat * torch.log(p_hat / q_hat), dim=1)
 
         return (1-self.beta) * CE + self.beta * torch.mean((1-self.zeta) * tckd + self.zeta * nckd) * (self.temperature ** 2)
+
+def sigmoid(x):
+    return 0.3391 / (1 + np.exp(-(0.9703 * x - 2.9132))) + 0.9571
+
+class RenyiDivergenceLossSigmoidAdjusted(nn.Module):
+    """
+    Knowledge distillation loss with Renyi Divergence with Sigmoid Adjustment for Alpha
+    """
+    def __init__(self, alpha=0.5, beta=0.5, temperature=1):
+        super(RenyiDivergenceLoss, self).__init__()
+        assert alpha > 0
+        assert beta >= 0 and beta <= 1
+        assert temperature > 0
+        self.alpha = alpha
+        self.beta = beta
+        self.temperature = temperature
+
+    def forward(self, x: torch.Tensor, y: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        CE = nn.CrossEntropyLoss()(x,target)
+        q = torch.softmax(x/self.temperature, dim=1)
+        p = torch.softmax(y/self.temperature, dim=1)
+
+        if self.alpha == 1:  # KL Divergence
+            return (1-self.beta) * CE + self.beta * torch.sum(p * torch.log(p / q), dim=1).mean() * (self.temperature ** 2)/ sigmoid(self.alpha)
+
+        return (1-self.beta) * CE + self.beta *  1 / (self.alpha - 1) * torch.log(
+            torch.sum(torch.pow(p, self.alpha) * torch.pow(q, 1 - self.alpha), dim=1)).mean() * (self.temperature ** 2)/ sigmoid(self.alpha)
