@@ -187,7 +187,7 @@ class RenyiDivergenceLossSigmoidAdjusted(nn.Module):
     Knowledge distillation loss with Renyi Divergence with Sigmoid Adjustment for Alpha
     """
     def __init__(self, alpha=0.5, beta=0.5, temperature=1):
-        super(RenyiDivergenceLoss, self).__init__()
+        super(RenyiDivergenceLossSigmoidAdjusted, self).__init__()
         assert alpha > 0
         assert beta >= 0 and beta <= 1
         assert temperature > 0
