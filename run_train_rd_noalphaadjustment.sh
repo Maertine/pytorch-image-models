@@ -13,7 +13,7 @@
 source .venv/bin/activate
 
 # Define parameter lists
-alphas=(1.5 2 5)
+alphas=(3.5 7.5)
 seeds=(478 100 25 4798 33 244 748 7488 6324 118)
 
 for alpha in "${alphas[@]}"; do
