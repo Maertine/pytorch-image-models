@@ -61,7 +61,7 @@ for alpha in "${alphas[@]}"; do
       --wandb-tags S \
       --wandb-group Student \
       --teacher-model resnet152 \
-      --teacher-model-path /home/gratzerm/pytorch-image-models/output/train/20250207-134637CIFAR-100resnet152CIFAR-10032/last.pth.tar \
+      --teacher-model-path /home/gratzerm/pytorch-image-models/output/train/20250220-215540CIFAR-100resnet152CIFAR-10032/last.pth.tar \
       --adjusted-training R \
       --alpha "$alpha" \
       --beta 0.9 \
