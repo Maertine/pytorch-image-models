@@ -180,7 +180,7 @@ class DKDLoss(nn.Module):
         return (1-self.beta) * CE + self.beta * torch.mean((1-self.zeta) * tckd + self.zeta * nckd) * (self.temperature ** 2)
 
 def sigmoid(x):
-    return 0.3391 / (1 + np.exp(-(0.9703 * x - 2.9132))) + 0.9571
+    return 13.3012 / (1 + np.exp(-(0.9968 * x - 2.9970))) - 0.5755
 
 class RenyiDivergenceLossSigmoidAdjusted(nn.Module):
     """
