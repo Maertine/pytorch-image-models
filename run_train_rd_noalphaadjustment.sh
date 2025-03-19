@@ -13,7 +13,7 @@
 source .venv/bin/activate
 
 # Define parameter lists
-alphas=(0.05 0.1 0.25)
+alphas=(1 5)
 seeds=(478 100 25 4798 33 244 748 7488 6324 118)
 
 for alpha in "${alphas[@]}"; do
@@ -30,7 +30,7 @@ for alpha in "${alphas[@]}"; do
       --epochs 220 \
       --batch-size 512 \
       --opt sgd \
-      --lr 0.08 \
+      --lr 0.4 \
       --sched cosine \
       --weight-decay 0.0005 \
       --momentum 0.9 \
@@ -56,7 +56,7 @@ for alpha in "${alphas[@]}"; do
       --seed "$seed" \
       --sched-on-updates \
       --log-wandb \
-      --experiment CIFAR-100-RD-NoAlpha \
+      --experiment CIFAR-100-RD-AdjustedLR \
       --wandb-name "$wandb_name" \
       --wandb-tags S \
       --wandb-group Student \
