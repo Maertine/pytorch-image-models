@@ -13,7 +13,7 @@
 source .venv/bin/activate
 
 # Define parameter lists
-alphas=(0.05 0.1 0.25)
+alphas=(1 5)
 seeds=(8444 174 2654 99965 1025 1222 4785 6444 302 1200)
 
 for alpha in "${alphas[@]}"; do
@@ -30,7 +30,7 @@ for alpha in "${alphas[@]}"; do
       --epochs 220 \
       --batch-size 512 \
       --opt sgd \
-      --lr 0.08 \
+      --lr 0.4 \
       --sched cosine \
       --weight-decay 0.0005 \
       --momentum 0.9 \
