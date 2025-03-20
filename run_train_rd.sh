@@ -30,7 +30,7 @@ for alpha in "${alphas[@]}"; do
       --epochs 220 \
       --batch-size 512 \
       --opt sgd \
-      --lr 0.08 \
+      --lr 0.8 \
       --sched cosine \
       --weight-decay 0.0005 \
       --momentum 0.9 \
