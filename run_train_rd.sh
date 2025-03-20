@@ -13,7 +13,7 @@
 source .venv/bin/activate
 
 # Define parameter lists
-alphas=(1 5)
+alphas=(5)
 seeds=(8444 174 2654 99965 1025 1222 4785 6444 302 1200)
 
 for alpha in "${alphas[@]}"; do
@@ -56,7 +56,7 @@ for alpha in "${alphas[@]}"; do
       --seed "$seed" \
       --sched-on-updates \
       --log-wandb \
-      --experiment CIFAR-100-RD \
+      --experiment CIFAR-100-RD-AdjustedLR \
       --wandb-name "$wandb_name" \
       --wandb-tags S \
       --wandb-group Student \
