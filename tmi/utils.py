@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
+
 class RenyiDivergence(nn.Module):
     def __init__(self, alpha=0.5):
         super(RenyiDivergence, self).__init__()
@@ -15,9 +16,14 @@ class RenyiDivergence(nn.Module):
         if self.alpha == 1:  # KL Divergence
             return torch.sum(p * torch.log(p / q), dim=1).mean()
 
+        if self.alpha == 0:
+            return -torch.log(torch.sum(q * (p > 0), dim=1)).mean()
+
+        if self.alpha == torch.inf:
+            return torch.log(torch.max(p / q, dim=1).values).mean()
+
         return 1 / (self.alpha - 1) * torch.log(
             torch.sum(torch.pow(p, self.alpha) * torch.pow(q, 1 - self.alpha), dim=1)).mean()
-
 
 class DKD(nn.Module):
     def __init__(self, alpha=1, beta=1):

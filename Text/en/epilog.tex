@@ -1,0 +1,14 @@
+\chapter*{Conclusion}
+\addcontentsline{toc}{chapter}{Conclusion}
+
+This thesis focused on modifying knowledge distillation by replacing the Kullback-Leibler divergence (KL divergence) with Rényi divergence, introducing an additional hyperparameter $\alpha$, which increased the flexibility of the training process.
+
+In the first chapter, we provided theoretical definitions of entropy, cross-entropy, Kullback-Leibler (KL) divergence, and Rényi divergence, together with an exploration of their relationship and the theoretical properties of Rényi divergence. We then introduced the concept of knowledge distillation and inspected key theoretical results. Finally, we replaced the KL divergence with Rényi divergence in the knowledge distillation framework and analyzed how some of the properties of Rényi divergence previously discussed affect the Rényi-based knowledge distillation, marking one of the key contributions of this thesis. 
+
+The second chapter focused on the optimization of the previously defined Rényi-based knowledge distillation loss function using the stochastic gradient descent (SGD) algorithm. Additionally, we provided a detailed description of the Residual Neural Network (ResNet) architecture, including the neuron, ReLU activation function, convolutional layer, and residual block. Both SGD and ResNet were utilized in the subsequent chapter.
+
+Arguably, the largest contribution of this thesis lies in the final chapter, which presents two experiments. In the first experiment we evaluated the effectiveness of Rényi-based knowledge distillation and compared it to the standard form of knowledge distillation. We observed promising improvements in model performance with $\alpha = 1.25$, and also identified significantly faster early convergence in models with higher values of the hyperparameter $\alpha$.
+
+For the second experiment, we introduced two additional formulations of Rényi-based knowledge distillation, motivated by the effort of reducing the indirect influence of $\alpha$ on the learning rate. We also evaluated the performance of the new formulation, with the first one, utilizing unscaled Rényi loss, essentially amplified the results observed in the initial experiment but also magnified its shortcomings. The second formulation, which used the normalized Rényi loss function, also yielded promising results in terms of final accuracy, while overcoming the shortcomings of the previous formulations. We also observed notable convergence at the beginning of the training process, although it was considerably smaller in magnitude.
+
+In the following discussion, we acknowledged the limitations of the thesis while also outlining potential avenues for future research in the area of Rényi-based knowledge distillation.

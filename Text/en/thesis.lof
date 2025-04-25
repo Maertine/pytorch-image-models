@@ -1,0 +1,21 @@
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Example of Rényi divergence for a fixed distribution and another varying along the x-axis.}}{8}{figure.1.1}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Example of temperature scaling.}}{10}{figure.1.2}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Residual block (\cite {He2016}).}}{20}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Example of network architecture (\cite {He2016}). Left: VGG-19 model as a reference. Middle: a plain network with 34 layers. Right: residual network with 34 layers (ResNet34).}}{21}{figure.2.2}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Visualization of 10 randomly selected images from each of the 5 classes within the superclasses \textit {large omnivores and herbivores} (top) and \textit {household furniture} (bottom) from the CIFAR-100 dataset.}}{22}{figure.3.1}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Test accuracy over 220 epochs for the teacher and vanilla models.}}{24}{figure.3.2}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Boxplots of the performance of fully-trained models from Experiment 1, with average values indicated by black lines and the performance of the vanilla model represented by a dashed gray line.}}{25}{figure.3.3}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Boxplots of the performance of models from Experiment 1 after 10 epochs, with average values indicated by black lines and the performance of the vanilla model represented by a dashed gray line.}}{26}{figure.3.4}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Comparison of the models. Left: Validation accuracy over 220 epochs for the teacher, vanilla, and selected student models. Right: Difference in accuracy compared to the student model with $\alpha =1$ over 220 epochs (Student models show averages over 10 iterations).}}{27}{figure.3.5}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Average value of $\kappa $ during testing across all models, computed by averaging over various values of $\alpha $, with $T=4$, as observed in the preliminary testing.}}{28}{figure.3.6}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Boxplots of the gradient values of the Rényi loss with respect to the student model logits, across various values of $\alpha $, grouped by label, for $T=4$.}}{29}{figure.3.7}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Boxplots of the gradient values of the unscaled Rényi loss from Equation~(\ref {modified_RL_noadj}) with respect to the student model logits, across various values of $\alpha $, grouped by label, for $T=4$.}}{30}{figure.3.8}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Medians of gradient values for label 0, computed using the unscaled Rényi loss from Equation~(\ref {modified_RL_noadj}) with respect to the student model logits, across various values of $\alpha $, along with the function $\hat {\sigma }(\alpha )$ estimated from this data}}{31}{figure.3.9}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Boxplots of the gradient values of the normalized Rényi loss from Equation~(\ref {modified_RL_sigmoid}) with respect to the student model logits, across various values of $\alpha $, grouped by label, for $T=4$.}}{31}{figure.3.10}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Boxplots of the performance of fully-trained models from Experiment 2, with mean values indicated by black lines and the performance of the vanilla model represented by a dashed gray line.}}{32}{figure.3.11}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Boxplots of the performance of models from Experiment 2 after 10 epochs, with mean values indicated by black lines and the performance of the vanilla model represented by a dashed gray line.}}{33}{figure.3.12}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Comparison of the models with modified loss function. Left: Validation accuracy over 220 epochs for the teacher, vanilla, and selected student models. Right: Difference in accuracy compared to the student model with $\alpha =1$ over 220 epochs (Student models show averages over 10 iterations).}}{34}{figure.3.13}%
+\addvspace {10\p@ }

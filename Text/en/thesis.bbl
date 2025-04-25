@@ -1,0 +1,144 @@
+\begin{thebibliography}{21}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Abbas and Lee(2021)]{AbbasLee2021}
+Jafar Abbas and Myungho Lee.
+\newblock High-speed hyperparameter optimization for deep resnet models in
+  image recognition.
+\newblock \emph{Cluster Computing}, 26, 05 2021.
+\newblock \doi{10.1007/s10586-021-03284-6}.
+
+\bibitem[Agarap(2018)]{Agarap2018}
+Abien~Fred Agarap.
+\newblock Deep learning using rectified linear units (relu).
+\newblock \emph{ArXiv}, abs/1803.08375, 2018.
+\newblock URL \url{https://api.semanticscholar.org/CorpusID:4090379}.
+
+\bibitem[Bottou(1991)]{Bottou1991}
+{L\'eon} Bottou.
+\newblock Stochastic gradient learning in neural networks.
+\newblock 1991.
+\newblock URL \url{http://leon.bottou.org/papers/bottou-91c}.
+
+\bibitem[Bottou(2010)]{Bottou2010}
+Léon Bottou.
+\newblock Large-scale machine learning with stochastic gradient descent.
+\newblock \emph{Proc. of COMPSTAT}, 09 2010.
+\newblock \doi{10.1007/978-3-7908-2604-3_16}.
+
+\bibitem[Cheng et~al.(2024)Cheng, Zheng, Yamada, and Okada]{Cheng2024}
+JH~Cheng, C~Zheng, R~Yamada, and D~Okada.
+\newblock Visualization of the landscape of the read alignment shape of
+  atac-seq data using hellinger distance metric.
+\newblock \emph{Genes \& Cells}, 29\penalty0 (1):\penalty0 5--16, January 2024.
+\newblock \doi{10.1111/gtc.13082}.
+\newblock Epub 2023 Nov 21.
+
+\bibitem[Cho and Hariharan(2019)]{ChoHariharan2019}
+Jang~Hyun Cho and Bharath Hariharan.
+\newblock On the efficacy of knowledge distillation.
+\newblock \emph{CoRR}, abs/1910.01348, 2019.
+\newblock URL \url{http://arxiv.org/abs/1910.01348}.
+
+\bibitem[Deng et~al.(2009)Deng, Dong, Socher, Li, Li, and Fei-Fei]{Deng2009}
+Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li~Fei-Fei.
+\newblock Imagenet: A large-scale hierarchical image database.
+\newblock pages 248--255, 2009.
+\newblock URL \url{https://ieeexplore.ieee.org/abstract/document/5206848/}.
+
+\bibitem[Goyal et~al.(2017)Goyal, Dollár, Girshick, Noordhuis, Wesolowski,
+  Kyrola, Tulloch, Jia, and He]{Goyal2017}
+Priya Goyal, Piotr Dollár, Ross Girshick, Pieter Noordhuis, Lukasz Wesolowski,
+  Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He.
+\newblock Accurate, large minibatch sgd: Training imagenet in 1 hour.
+\newblock 06 2017.
+\newblock \doi{10.48550/arXiv.1706.02677}.
+
+\bibitem[He et~al.(2016)He, Zhang, Ren, and Sun]{He2016}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock pages 770--778, 2016.
+\newblock \doi{10.1109/CVPR.2016.90}.
+
+\bibitem[Hinton et~al.(2015)Hinton, Vinyals, and Dean]{HintonVinyalsDean2015}
+Geoffrey Hinton, Oriol Vinyals, and Jeff Dean.
+\newblock Distilling the knowledge in a neural network.
+\newblock \emph{arXiv preprint arXiv:1503.02531}, 2015.
+
+\bibitem[Krizhevsky(2009)]{Krizhevsky2009}
+Alex Krizhevsky.
+\newblock Learning multiple layers of features from tiny images.
+\newblock pages 32--33, 2009.
+\newblock URL
+  \url{https://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf}.
+
+\bibitem[Kullback and Leibler(1951)]{KullbackLeibler1951}
+S.~Kullback and R.~A. Leibler.
+\newblock On information and sufficiency.
+\newblock \emph{Ann. Math. Statist.}, 22\penalty0 (1):\penalty0 79--86, 1951.
+
+\bibitem[R{\'e}nyi(1961)]{Rényi1961}
+Alfr{\'e}d R{\'e}nyi.
+\newblock On measures of entropy and information.
+\newblock 1961.
+\newblock URL \url{https://api.semanticscholar.org/CorpusID:123056571}.
+
+\bibitem[Rumelhart et~al.(1986)Rumelhart, Hinton, and Williams]{Rumelhart1986}
+David~E Rumelhart, Geoffrey~E Hinton, and Ronald~J Williams.
+\newblock Learning representations by back-propagating errors.
+\newblock \emph{nature}, 323\penalty0 (6088):\penalty0 533--536, 1986.
+
+\bibitem[Shannon(1948)]{Shannon1948}
+Claude~Elwood Shannon.
+\newblock A mathematical theory of communication.
+\newblock \emph{The Bell System Technical Journal}, 27:\penalty0 379--423,
+  1948.
+\newblock URL
+  \url{http://plan9.bell-labs.com/cm/ms/what/shannonday/shannon1948.pdf}.
+
+\bibitem[Simonyan and Zisserman(2014)]{Simonyan2014}
+Karen Simonyan and Andrew Zisserman.
+\newblock Very deep convolutional networks for large-scale image recognition.
+\newblock \emph{CoRR}, abs/1409.1556, 2014.
+\newblock URL \url{https://api.semanticscholar.org/CorpusID:14124313}.
+
+\bibitem[Sutskever et~al.(2013)Sutskever, Martens, Dahl, and
+  Hinton]{Sutskever2013}
+Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton.
+\newblock On the importance of initialization and momentum in deep learning.
+\newblock page III–1139–III–1147, 2013.
+
+\bibitem[Torralba et~al.(2008)Torralba, Fergus, and
+  Freeman]{TorralbaFergusFreeman2008}
+Antonio Torralba, Rob Fergus, and William~T. Freeman.
+\newblock 80 million tiny images: A large data set for nonparametric object and
+  scene recognition.
+\newblock \emph{IEEE Trans. Pattern Anal. Mach. Intell.}, 30\penalty0
+  (11):\penalty0 1958–1970, November 2008.
+\newblock ISSN 0162-8828.
+\newblock \doi{10.1109/TPAMI.2008.128}.
+\newblock URL \url{https://doi.org/10.1109/TPAMI.2008.128}.
+
+\bibitem[van Erven and Harremo{\"{e}}s(2012)]{vanErvenHarremoës2012}
+Tim van Erven and Peter Harremo{\"{e}}s.
+\newblock R{\'{e}}nyi divergence and kullback-leibler divergence.
+\newblock \emph{CoRR}, abs/1206.2459, 2012.
+\newblock URL \url{http://arxiv.org/abs/1206.2459}.
+
+\bibitem[Wightman(2019)]{Wightman2019}
+Ross Wightman.
+\newblock Pytorch image models.
+\newblock \url{https://github.com/huggingface/pytorch-image-models}, 2019.
+\newblock Accessed: April 10, 2025.
+
+\bibitem[Wightman et~al.(2021)Wightman, Touvron, and Jégou]{Wightman2021}
+Ross Wightman, Hugo Touvron, and Hervé Jégou.
+\newblock Resnet strikes back: An improved training procedure in timm.
+\newblock 10 2021.
+\newblock \doi{10.48550/arXiv.2110.00476}.
+
+\end{thebibliography}

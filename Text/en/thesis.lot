@@ -1,0 +1,7 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Training hyperparameters used for the experiment inspired by \cite {AbbasLee2021}.}}{23}{table.3.1}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Experiment 1 results showing average test accuracy and improvement over the vanilla model for various values of $\alpha $. The best result is highlighted in bold.}}{25}{table.3.2}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Results of Experiment 2 showing the average test accuracy for various values of $\alpha $, with the improvement over the vanilla model in superscript. The best result for each loss function is highlighted in bold.}}{32}{table.3.3}%
+\addvspace {10\p@ }
